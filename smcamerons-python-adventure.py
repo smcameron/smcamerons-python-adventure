@@ -251,6 +251,9 @@ def doexamine(words):
       return;
    map(examine_object, tox);
 
+def dolisten(words):
+   print "You hear the faint hum of space machinery."
+
 verbs = {
    'quit' : doquit,
    'go' : dogo,
@@ -262,8 +265,10 @@ verbs = {
    'look' : describe_room,
    'inventory' : doinventory,
    'i' : doinventory,
+   'listen' : dolisten,
 };
 
+print "\n\n\n"
 while 1:
    if (p.location.visited == 0):
       describe_room(1);
