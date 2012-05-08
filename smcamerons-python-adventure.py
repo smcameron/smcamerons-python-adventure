@@ -219,17 +219,16 @@ def dogo(words):
    map(go_direction, words);
 
 def describe_obj_in_room(o):
-   if (o.location != p.location):
-      return;
    print "  " + o.description;
-   return o;
 
 def describe_room(not_used):
    p.location.describe();
    print "You see:\n"
-   objs_in_room = [f for f in map(describe_obj_in_room, objects) if f != None];
+   objs_in_room = [f for f in objects if f.location == p.location];
    if not objs_in_room:
       print "  Nothing of interest."
+      return;
+   map(describe_obj_in_room, objs_in_room);
 
 def examine_object(o):
    w = o[0];
