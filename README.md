@@ -1,4 +1,4 @@
 smcamerons-python-adventure
 ===========================
 
-This is just me screwing around learning python
+This is me, just screwing around and learning python.
