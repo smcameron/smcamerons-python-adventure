@@ -31,7 +31,7 @@ class room:
 
     def describe(self):
         self.visited = 1
-        print(self.description)
+        print((self.description))
 
 
 class thingy:
@@ -97,7 +97,7 @@ def lookup_noun(noun):
 
 
 def lookup_nouns(nounlist):
-    return map(lookup_noun, nounlist)
+    return list(map(lookup_noun, nounlist))
 
 #
 # this is for handling the word "all".
@@ -184,36 +184,36 @@ def doinventory(o):
     print("You are carrying:")
     for x in objects:
         if (x.location == pocket):
-            print("  " + x.description)
+            print(("  " + x.description))
 
 
 def drop_object(o):
     w = o[0]
     obj = o[1]
     if obj == None:
-        print(w + ": I don't know what that is.")
+        print((w + ": I don't know what that is."))
         return
     if obj.location != pocket:
-        print(w + ": You do not have that.")
+        print((w + ": You do not have that."))
         return
     obj.location = p.location
-    print(w + ": Dropped")
+    print((w + ": Dropped"))
 
 
 def take_object(o):
     w = o[0]
     obj = o[1]
     if obj == None:
-        print(w + ": I don't know what that is.")
+        print((w + ": I don't know what that is."))
         return
     if obj.location != p.location:
-        print(w + ": That is not here.")
+        print((w + ": That is not here."))
         return
     if obj.portable != 1:
-        print(w + ": You can't take that")
+        print((w + ": You can't take that"))
         return
     obj.location = pocket
-    print(w + ": Taken.")
+    print((w + ": Taken."))
     return
 
 
@@ -222,7 +222,7 @@ def dodrop(words):
     if not todrop:
         print("You need to tell me what to drop.")
         return
-    map(drop_object, todrop)
+    list(map(drop_object, todrop))
 
 
 def dotake(words):
@@ -230,7 +230,7 @@ def dotake(words):
     if not totake:
         print("You need to tell me what to take.")
         return
-    map(take_object, totake)
+    list(map(take_object, totake))
 
 
 canonical_directions = ["north", "northeast", "east", "southeast", "south",
@@ -239,25 +239,25 @@ canonical_directions = ["north", "northeast", "east", "southeast", "south",
 
 def go_direction(direction):
     if (not hasattr(p.location, direction)):
-        print(direction + ": You can't go that way.")
+        print((direction + ": You can't go that way."))
         return
     if (not direction in canonical_directions):
-        print(direction + ": You can't go that way.")
+        print((direction + ": You can't go that way."))
         return
     destination = getattr(p.location, direction)
     if (not isinstance(destination, room)):
-        print(direction + ": I don't understand.")
+        print((direction + ": I don't understand."))
         return
     p.location = destination
-    print("\n" + p.location.name + ":\n\n")
+    print(("\n" + p.location.name + ":\n\n"))
 
 
 def dogo(words):
-    map(go_direction, words)
+    list(map(go_direction, words))
 
 
 def describe_obj_in_room(o):
-    print("  " + o.description)
+    print(("  " + o.description))
 
 
 def describe_room(not_used):
@@ -267,22 +267,22 @@ def describe_room(not_used):
     if not objs_in_room:
         print("  Nothing of interest.")
         return
-    map(describe_obj_in_room, objs_in_room)
+    list(map(describe_obj_in_room, objs_in_room))
 
 
 def examine_object(o):
     w = o[0]
     obj = o[1]
     if obj == None:
-        print(w + ": I don't know what that is.")
+        print((w + ": I don't know what that is."))
         return
     if obj.location != pocket and obj.location != p.location:
-        print(w + ": That is not here.")
+        print((w + ": That is not here."))
         return
     if not hasattr(obj, "examine"):
-        print(w + ": You see nothing special about that.")
+        print((w + ": You see nothing special about that."))
         return
-    print(obj.shortname + ": " + obj.examine)
+    print((obj.shortname + ": " + obj.examine))
 
 
 def doexamine(words):
@@ -290,7 +290,7 @@ def doexamine(words):
     if not tox:
         print("You need to tell me what to examine.")
         return
-    map(examine_object, tox)
+    list(map(examine_object, tox))
 
 
 def dolisten(words):
@@ -312,12 +312,17 @@ verbs = {
 }
 
 print("\n\n\n")
-while 1:
-    if (p.location.visited == 0):
+
+
+
+while True:
+    if p.location.visited == 0:
         describe_room(1)
-    words = re.split("[,; .]", raw_input("> "))
-    first_word = get_first(words)
-    if first_word in verbs:
-        verbs[first_word](words[1:])
-    else:
-        print("Sorry, I don't know what that means.")
+    input_str = input("> ")
+    words = re.split("[,; .]", input_str)
+    if words:
+        first_word = words[0]
+        if first_word in verbs:
+            verbs[first_word](words[1:])
+        else:
+            print("Sorry, I don't know what that means.")
