@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # This is a tiny little text adventure I'm writing in python
 # for the purpose of learning python.
 #
